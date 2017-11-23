@@ -1,10 +1,15 @@
 
 package com.reactlibrary;
 
+import android.app.Activity;
+import android.view.View;
+import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import java.lang.Runnable;
+
 
 public class RNResetFocusModule extends ReactContextBaseJavaModule {
 
@@ -17,13 +22,21 @@ public class RNResetFocusModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void resetFocus() {
-      Activity currentActivity = (Activity)(reactContext.getCurrentActivity().getWindow().getDecorView()).findViewById(android.R.id.content).getContext();
-      View focusedView = currentActivity.getCurrentFocus();
+      final Activity currentActivity = reactContext.getCurrentActivity();
 
-      if (focusedView != null) {
-          focusedView.clearFocus();
-      }
-      reactContext.getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content).requestFocusFromTouch();
+      currentActivity.runOnUiThread(new Runnable() {
+          public void run() {
+              // Activity rootActivity = (Activity)((currentActivity.getWindow().getDecorView()).findViewById(android.R.id.content)).getContext();
+              View focusedView = currentActivity.getCurrentFocus();
+
+              if (focusedView != null) {
+                  focusedView.clearFocus();
+              }
+
+              currentActivity.getWindow().getDecorView().findViewById(android.R.id.content).requestFocusFromTouch();
+          }
+      });
+
   }
 
   @Override
