@@ -26,7 +26,6 @@ public class RNResetFocusModule extends ReactContextBaseJavaModule {
 
       currentActivity.runOnUiThread(new Runnable() {
           public void run() {
-              // Activity rootActivity = (Activity)((currentActivity.getWindow().getDecorView()).findViewById(android.R.id.content)).getContext();
               View focusedView = currentActivity.getCurrentFocus();
 
               if (focusedView != null) {
