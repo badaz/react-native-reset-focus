@@ -3,7 +3,6 @@ package com.reactlibrary;
 
 import android.app.Activity;
 import android.view.View;
-import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
